@@ -21,7 +21,8 @@ public class Client {
 		int flag=1;
 		Seat s = new Seat();
 		Screen s1=new Screen();
-		Theatre t = new Theatre();
+//		Theatre t = new Theatre();
+		MovieShow ms = new MovieShow();
 		
 				
 		System.out.println("\t\t\t\t---------------  Client  ----------------");
@@ -65,6 +66,8 @@ public class Client {
 				break;
 			case 2:
 				System.out.println("Schedule a Movie Show ()");
+//				ms.scheduleShow();
+				ms.viewShow();
 				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
@@ -111,6 +114,7 @@ public class Client {
 				System.out.println("Invalid option. Please enter value between 1-6.");
 			}
 		}
+		sc.close();
 	}
 
 }

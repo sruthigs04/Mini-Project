@@ -1,8 +1,8 @@
 package client;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
@@ -20,6 +20,13 @@ public class Seat {
 	int row=65;
 	int col=1;	
 	int r1,r2,r3;
+	
+	
+	Movie m = new Movie();
+	Theatre t = new Theatre();
+	Screen s = new Screen();
+	int movie_ID;
+	
 		
 	int addSeats() {
 		Scanner sc = new Scanner(System.in);		
@@ -29,45 +36,21 @@ public class Seat {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
 			Statement smt = con.createStatement();
 			
-			// select theatre
+			//choose movie			
+			System.out.println("Choose Movie\n");
+			m.showMovies();
+			movie_ID=sc.nextInt();
 			
-			System.out.println("Select Theatre");
-			String count = "select * from theatre";
-			ResultSet rs = smt.executeQuery(count);
-			if (rs.next()==false)
-			{
-				System.out.println("No theatres available");
-				return 0;
-			}				
-			else 
-			{
-				do
-	            {				
-	                System.out.println("ID:"+rs.getString("ID"));
-	                System.out.println("Name:"+rs.getString("name"));
-	                System.out.println("Number of Screens:"+rs.getString("screen_count"));			
-	            }while(rs.next());
-			}
-			theatre_ID=sc.nextInt();
+			// select theatre
+			System.out.println("Choose Theatre\n");
+			t.showTheatre();
+			theatre_ID = sc.nextInt();
 			
 			//select screen	
-			
 			System.out.println("Select Screen");
-			String count1 = "select * from screen where theatre_ID=\""+theatre_ID+"\";";
-			ResultSet rs1 = smt.executeQuery(count1);
-			if (rs1.next()==false) {
-				System.out.println("No screens available");
-				return 0;
-			}
-				
-			else {
-			do
-            {
-                System.out.println("ID:"+rs1.getString("ID"));
-                System.out.println("Name:"+rs1.getString("name"));
-                System.out.println("Capacity:"+rs1.getInt("capacity"));	
-            }while(rs1.next());
-			}
+			s.showScreen(theatre_ID);
+			screen_ID = sc.nextInt();
+			sc.nextLine();
 			screen_ID=sc.nextInt();	
 			
 			//get other details
@@ -120,6 +103,7 @@ public class Seat {
 		catch (Exception e){
 			System.out.println("Failed to Connect" + e);
 		}
+		sc.close();
 		return 0;
 	}
 	

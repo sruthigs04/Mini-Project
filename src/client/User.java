@@ -2,7 +2,7 @@ package client;
 
 import java.util.Scanner;
 
-public class Consumer {
+public class User {
 	
 	static void exitfn(int flag) {
 		if (flag==0)
@@ -14,9 +14,12 @@ public class Consumer {
 		int choice=0;
 		int input=0 ;
 		int flag=1;
+		int user_ID=1;
 		Seat s = new Seat();
 		Screen s1=new Screen();
 		Theatre t = new Theatre();
+		MovieShow ms = new MovieShow();
+		Ticket tk = new Ticket();
 		
 		System.out.println("---------------  Consumer  ----------------");
 		
@@ -57,7 +60,8 @@ public class Consumer {
 				exitfn(flag);
 				break;
 			case 2:
-//				System.out.println("Book Movie Tickets");
+				System.out.println("Book Movie Tickets");
+				tk.bookTicket(user_ID);
 				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);

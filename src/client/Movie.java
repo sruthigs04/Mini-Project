@@ -16,7 +16,7 @@ public class Movie {
 	String releaseDate; 
 	String artist;
 	
-	enum languages {Tamil,Telugu,Malayalam,Kannada,Hindi,English};
+	String languages[] = {"Tamil","Telugu","Malayalam","Kannada","Hindi","English"};
 	enum genres {Action,Comedy,Thriller,Romance,Drama,Horror};
 	
 	void addMovies() 
@@ -59,6 +59,7 @@ public class Movie {
 		catch (Exception e){
 			System.out.println("Failed to Connect" + e);
 		}
+		sc.close();
 	}
 	
 	void showMovies()
@@ -74,7 +75,7 @@ public class Movie {
                 System.out.println("ID:"+rs.getString("ID"));
                 System.out.println("Name:"+rs.getString("name"));
                 System.out.println("Genre:"+rs.getString("genre"));
-                System.out.println("Language:"+rs.getString("language"));
+                System.out.println("Language:"+languages[Integer.parseInt(rs.getString("language"))-1]);
                 System.out.println("is3D:"+rs.getString("is3D"));
                 System.out.println("duration:"+rs.getString("duration"));
                 System.out.println("description:"+rs.getString("description"));
