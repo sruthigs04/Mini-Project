@@ -15,7 +15,7 @@ public class User {
 		int input=0 ;
 		int flag=1;
 		int user_ID=1;
-		Seat s = new Seat();
+//		Seat s = new Seat();
 		Screen s1=new Screen();
 		Theatre t = new Theatre();
 		MovieShow ms = new MovieShow();

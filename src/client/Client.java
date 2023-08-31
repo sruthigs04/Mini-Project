@@ -19,7 +19,6 @@ public class Client {
 		int choice=0;
 		int input=0 ;
 		int flag=1;
-		Seat s = new Seat();
 		Screen s1=new Screen();
 //		Theatre t = new Theatre();
 		MovieShow ms = new MovieShow();
@@ -82,6 +81,7 @@ public class Client {
 					case 1:
 //						System.out.println("Add Screen()");
 						s1.addScreen();
+						Seat s = new Seat("","",0);
 						s.addSeats();
 //						dummy();
 						break;

@@ -59,7 +59,7 @@ public class MovieShow {
 			 statement.setString(3, startTime);
 			 statement.setString(4, endTime);
 			 statement.setString(5, date);
-			 statement.executeUpdate();
+//			 statement.executeUpdate();
 			 System.out.println("Record created.");
 			con.close();
 			} 
@@ -79,7 +79,13 @@ public class MovieShow {
 			Statement smt = con.createStatement();
 			System.out.println("Enter date");
 			date=sc.nextLine();
-			String count1 = "select movieshow.ID,movie.name,movieshow.start,movieshow.date,theatre.name,theatre.locality from movie inner join movieshow on movie.ID = movieshow.movie_ID inner join screen on screen.ID = movieshow.screen_ID inner join theatre on theatre.ID = screen.theatre_ID where movieshow.date=\""+date+"\";";
+			String count1 = "select movieshow.ID,"
+					+ "movie.name,movieshow.start,movieshow.date,"
+					+ "theatre.name,theatre.locality from movie "
+					+ "inner join movieshow on movie.ID = movieshow.movie_ID"
+					+ " inner join screen on screen.ID = movieshow.screen_ID "
+					+ "inner join theatre on theatre.ID = screen.theatre_ID "
+					+ "where movieshow.date=\""+date+"\";";
 			ResultSet rs1 = smt.executeQuery(count1);
 			if (rs1.next()==false) {
 				System.out.println("No screens available");

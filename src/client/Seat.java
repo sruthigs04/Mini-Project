@@ -3,6 +3,7 @@ package client;
 import java.sql.Connection;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
@@ -27,6 +28,11 @@ public class Seat {
 	Screen s = new Screen();
 	int movie_ID;
 	
+	Seat(String name,String type,float price){
+		this.name=name;
+		this.type=type;
+		this.price=price;
+	}
 		
 	int addSeats() {
 		Scanner sc = new Scanner(System.in);		
@@ -107,4 +113,32 @@ public class Seat {
 		return 0;
 	}
 	
+	int getSeat(int show_ID,String seatName)
+	{
+		int seat_ID;
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
+			String getseat="select seat.ID from seat inner join movieshow on movieshow.screen_ID=seat.screen_ID where seat.name=\""+seatName+"\" and movieshow.ID="+show_ID+";";
+			Statement smt = con.createStatement();
+			ResultSet rs1 = smt.executeQuery(getseat);
+			if (rs1.next()==false) {
+				System.out.println("Ticket ID unavailable. Booking failed.");			
+			}				
+			else {
+			do
+	        {
+	            System.out.println("ID: "+rs1.getInt("ID"));
+	            seat_ID=rs1.getInt("ID");
+	        }while(rs1.next());		
+			return seat_ID;		
+			}
+		con.close();
+		} 
+		catch (Exception e){
+			System.out.println("Failed to Connect" + e);
+		}
+	return 0;
+	}
 }
