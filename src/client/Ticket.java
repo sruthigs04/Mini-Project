@@ -22,11 +22,6 @@ public class Ticket {
 //	int seatPrice;
 	Seat seats[] = new Seat[10];	
 	
-//	for(int i=0;i<10;i++)
-//{
-//		seats[i]=new Seat("","",0);
-//	}
-//	
 	MovieShow ms = new MovieShow();
 	Scanner sc = new Scanner(System.in);
 	
@@ -47,11 +42,13 @@ public class Ticket {
 		String seatName;
 		String seatType;
 		float seatPrice=0;
-		Seat var = new Seat("","",0);
+		Seat var = new Seat();
+//		int flag=0;
 		
 		//select show
-		System.out.println("Select show");
+		System.out.println("\n\t\t------ Book Tickets ------");
 		ms.viewShow();
+		System.out.println("Select Show");
 		show_ID=sc.nextInt();
 		
 		//connection establishment 
@@ -83,6 +80,8 @@ public class Ticket {
 				seatPrice =110;
 			
 			//display available seats
+			ms.showSeat(show_ID);
+
 			
 			//update seats Array			
 			for(int i=0;i<seat_count;i++)
@@ -137,21 +136,19 @@ public class Ticket {
 				statement1.setString(3, seats[i].name);
 //				System.out.println(cmd2);
 				statement1.executeUpdate();
-
-			}					
+			}	
+			
+			
+			System.out.println("Tickets have been booked successfully!");
 		}catch (Exception e)
 		{
 			System.out.println("Failed to book tickets. Please try again! " + e);
 		}
-		System.out.println("Tickets have been booked successfully!");
 		return 0;
 	}
 	
-	void cancelTicket() {}
-	
-	
+	void cancelTicket() {}	
 }
-
 
 //insert into movieticket (price,user_ID,show_ID,seat_count) values (360,1,3,2);
 //insert into bookedtickets (ticket_ID,seat_ID,seat_name) values (?,?,?)

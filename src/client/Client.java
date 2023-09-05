@@ -22,6 +22,7 @@ public class Client {
 		Screen s1=new Screen();
 //		Theatre t = new Theatre();
 		MovieShow ms = new MovieShow();
+		Event e = new Event();
 		
 				
 		System.out.println("\t\t\t\t---------------  Client  ----------------");
@@ -51,12 +52,15 @@ public class Client {
 					{
 					case 1:
 						System.out.println("Add music show ()");
+						e.scheduleEvent("music");
 						break;
 					case 2:
 						System.out.println("Add comedy show ()");
+						e.scheduleEvent("comedy");
 						break;
 					case 3:
 						System.out.println("Add Theatre show ()");
+						e.scheduleEvent("theatre");
 						break;
 					}
 				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");

@@ -8,20 +8,19 @@ public class User {
 		if (flag==0)
 		System.out.println("Logged out.\n------  END OF PROGRAM  ------");
 	}
-
+	
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int choice=0;
 		int input=0 ;
 		int flag=1;
 		int user_ID=1;
-//		Seat s = new Seat();
-		Screen s1=new Screen();
-		Theatre t = new Theatre();
-		MovieShow ms = new MovieShow();
+//		MovieShow ms = new MovieShow();
 		Ticket tk = new Ticket();
+		Event e = new Event();
 		
-		System.out.println("---------------  Consumer  ----------------");
+		System.out.println("---------------  USER  ----------------");
 		
 		while(flag==1)
 		{
@@ -47,56 +46,64 @@ public class User {
 					{
 					case 1:
 						System.out.println("Add music show ()");
+						e.bookEventTickets("Music",1);
 						break;
 					case 2:
 						System.out.println("Add comedy show ()");
+						e.bookEventTickets("COmedy",1);
 						break;
 					case 3:
 						System.out.println("Add Theatre show ()");
 						break;
 					}
-				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
+				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 2:
-				System.out.println("Book Movie Tickets");
 				tk.bookTicket(user_ID);
-				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
+				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 3:
 				System.out.println("Cancel Event Tickets");
-				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
+				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 4:
 				System.out.println("Cancel Movie Tickets");
-				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
+				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 5:
 				System.out.println("Update Profile");
-				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
+				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
+				
 			case 6:
-				System.out.println("View Upcoming Shows");System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
+//				System.out.println("View Upcoming Shows");
+//				ms.viewShow();
+//				ms.showSeat(1);
+//				e.showEventDetails(2);
+//				e.showAllEvents("Music");
+				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 7:
-				System.out.println("End of program");
+				exitfn(flag);
 				flag=0;
 				break;
 			default:
 				System.out.println("Invalid option. Please enter value between 1-7.");		
 			}
 		}
+	sc.close();
 	}
 
 }

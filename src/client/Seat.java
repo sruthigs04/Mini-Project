@@ -9,7 +9,6 @@ import java.util.*;
 
 public class Seat {
 	String name;
-	boolean isBooked = false;
 	String type;
 	float price;
 	String description = "seated"; //standing, seated, etc.
@@ -32,6 +31,11 @@ public class Seat {
 		this.name=name;
 		this.type=type;
 		this.price=price;
+	}
+	
+	
+	Seat() {
+		
 	}
 		
 	int addSeats() {
@@ -98,7 +102,7 @@ public class Seat {
 					type="Economy";
 					price=110;
 				}
-				String dmlcmd = "insert into seat(screen_ID,name,isbooked,type,price,description) values (\""+screen_ID+"\",\""+name+"\",\""+isBooked+"\",\""+type+"\",\""+price+"\",\""+description+"\");";
+				String dmlcmd = "insert into seat(screen_ID,name,type,price,description) values (\""+screen_ID+"\",\""+name+"\",\""+type+"\",\""+price+"\",\""+description+"\");";
 //				System.out.println(dmlcmd);
 				smt.executeUpdate(dmlcmd);
 			}
@@ -129,7 +133,7 @@ public class Seat {
 			else {
 			do
 	        {
-	            System.out.println("ID: "+rs1.getInt("ID"));
+//	            System.out.println("ID: "+rs1.getInt("ID"));
 	            seat_ID=rs1.getInt("ID");
 	        }while(rs1.next());		
 			return seat_ID;		
