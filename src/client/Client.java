@@ -4,27 +4,23 @@ import java.util.*;
 
 public class Client {
 
-	static void dummy() {
-		System.out.println("Dummy print");
-	}
-	
 	static void exitfn(int flag) {
 		if (flag==0)
 		System.out.println("Logged out.\n------  END OF PROGRAM  ------");
 	}
-	
-	 
+		 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int choice=0;
 		int input=0 ;
 		int flag=1;
+		Seat s = new Seat();
 		Screen s1=new Screen();
-//		Theatre t = new Theatre();
+		Theatre t = new Theatre();
 		MovieShow ms = new MovieShow();
 		Event e = new Event();
-		
-				
+
+						
 		System.out.println("\t\t\t\t---------------  Client  ----------------");
 		
 		while(flag==1 )
@@ -52,15 +48,15 @@ public class Client {
 					{
 					case 1:
 						System.out.println("Add music show ()");
-						e.scheduleEvent("music");
+						e.scheduleEvent("Music");
 						break;
 					case 2:
 						System.out.println("Add comedy show ()");
-						e.scheduleEvent("comedy");
+						e.scheduleEvent("Comedy");
 						break;
 					case 3:
 						System.out.println("Add Theatre show ()");
-						e.scheduleEvent("theatre");
+						e.scheduleEvent("Theatre");
 						break;
 					}
 				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
@@ -68,9 +64,7 @@ public class Client {
 				exitfn(flag);
 				break;
 			case 2:
-				System.out.println("Schedule a Movie Show ()");
-//				ms.scheduleShow();
-				ms.viewShow();
+				ms.scheduleShow();
 				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
@@ -83,16 +77,11 @@ public class Client {
 					switch (choice)
 					{
 					case 1:
-//						System.out.println("Add Screen()");
 						s1.addScreen();
-						Seat s = new Seat("","",0);
-						s.addSeats();
-//						dummy();
 						break;
 					case 2:
-						System.out.println("Remove Screen()");
-						break;
-						
+						s1.removeScreen();
+						break;						
 					}	
 				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
@@ -100,19 +89,21 @@ public class Client {
 				break;
 			case 4:
 				System.out.println("Register a Theatre ()");
-				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
+				t.registerTheatre();
+				System.out.println("Do you want to add screens? If yes, press 3. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 5:
 				System.out.println("Deregister a Theatre ()");
+				t.deregisterTheatre();
 				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 6:
-				System.out.println("End of program");
 				flag=0;
+				exitfn(flag);
 				break;
 			default:
 				System.out.println("Invalid option. Please enter value between 1-6.");

@@ -122,7 +122,8 @@ public class Ticket {
 	        {
 //	            System.out.println("Ticket ID: "+rs1.getInt("ID"));
 	            ticket_ID=rs1.getInt("ID");
-	        }while(rs1.next());			}
+	        }while(rs1.next());		
+			}
 			
 								// update movieticket table
 			

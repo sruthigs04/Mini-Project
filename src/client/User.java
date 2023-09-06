@@ -16,7 +16,7 @@ public class User {
 		int input=0 ;
 		int flag=1;
 		int user_ID=1;
-//		MovieShow ms = new MovieShow();
+		MovieShow ms = new MovieShow();
 		Ticket tk = new Ticket();
 		Event e = new Event();
 		
@@ -45,15 +45,13 @@ public class User {
 				switch (choice)
 					{
 					case 1:
-						System.out.println("Add music show ()");
-						e.bookEventTickets("Music",1);
+						e.bookEventTickets("Music",user_ID);
 						break;
 					case 2:
-						System.out.println("Add comedy show ()");
-						e.bookEventTickets("COmedy",1);
+						e.bookEventTickets("Comedy",user_ID);
 						break;
 					case 3:
-						System.out.println("Add Theatre show ()");
+						e.bookEventTickets("Theatre",user_ID);
 						break;
 					}
 				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
@@ -67,13 +65,12 @@ public class User {
 				exitfn(flag);
 				break;
 			case 3:
-				System.out.println("Cancel Event Tickets");
+//				e.cancelEventTicket(user_ID);
 				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
 				break;
 			case 4:
-				System.out.println("Cancel Movie Tickets");
 				System.out.println("\nDo you want to continue? If yes, press 1. To exit, press 0 ");
 				flag=sc.nextInt();
 				exitfn(flag);
@@ -86,7 +83,6 @@ public class User {
 				break;
 				
 			case 6:
-//				System.out.println("View Upcoming Shows");
 //				ms.viewShow();
 //				ms.showSeat(1);
 //				e.showEventDetails(2);
@@ -96,8 +92,8 @@ public class User {
 				exitfn(flag);
 				break;
 			case 7:
-				exitfn(flag);
 				flag=0;
+				exitfn(flag);
 				break;
 			default:
 				System.out.println("Invalid option. Please enter value between 1-7.");		

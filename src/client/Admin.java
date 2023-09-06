@@ -23,8 +23,7 @@ System.out.println("\t\t\t\t---------------  Admin  ----------------");
 		{
 			System.out.println("\nMENU - \n(Choose an option between 1-3) ");
 			System.out.println("1. Add Movie");
-			System.out.println("2. Add Artist");
-			System.out.println("3. Exit");
+			System.out.println("2. Exit");
 			
 			input=sc.nextInt();
 			sc.nextLine();
@@ -39,12 +38,6 @@ System.out.println("\t\t\t\t---------------  Admin  ----------------");
 				exitfn(flag);
 				break;
 			case 2:
-				System.out.println("Add Artist ()");
-				System.out.println("Do you want to continue? If yes, press 1. To exit, press 0 ");
-				flag=sc.nextInt();
-				exitfn(flag);
-				break;
-			case 3:
 				System.out.println("End of program");
 				flag=0;
 				break;

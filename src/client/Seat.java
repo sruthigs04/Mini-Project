@@ -38,46 +38,63 @@ public class Seat {
 		
 	}
 		
-	int addSeats() {
+	int addSeats(int screen_ID) {
 		Scanner sc = new Scanner(System.in);		
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
+			
+////			//choose movie			
+////			System.out.println("Choose Movie\n");
+////			m.showMovies();
+////			movie_ID=sc.nextInt();
+//			
+//			// select theatre
+//			System.out.println("Choose Theatre\n");
+//			t.showTheatre();
+//			theatre_ID = sc.nextInt();
+//			
+//			//select screen	
+//			System.out.println("Select Screen");
+//			s.showScreen(theatre_ID);
+//			screen_ID = sc.nextInt();
+//			sc.nextLine();
+//			screen_ID=sc.nextInt();	
+			
 			Statement smt = con.createStatement();
+			String count1 = "select capacity,maxRow,maxCol from screen where ID="+screen_ID+";";
+			ResultSet rs1 = smt.executeQuery(count1);
+			if (rs1.next()==false) {
+				System.out.println("No screens available");
+				return 0;
+			}						
+			else {
+			do
+	        {
+	            capacity=rs1.getInt("capacity");
+	            String x =rs1.getString("maxRow"); 
+	            char y=x.charAt(0);
+				rowMax=(int)y;
+	            colMax=rs1.getInt("capacity");
+
+	        }while(rs1.next());
+			}
 			
-			//choose movie			
-			System.out.println("Choose Movie\n");
-			m.showMovies();
-			movie_ID=sc.nextInt();
-			
-			// select theatre
-			System.out.println("Choose Theatre\n");
-			t.showTheatre();
-			theatre_ID = sc.nextInt();
-			
-			//select screen	
-			System.out.println("Select Screen");
-			s.showScreen(theatre_ID);
-			screen_ID = sc.nextInt();
-			sc.nextLine();
-			screen_ID=sc.nextInt();	
-			
-			//get other details
-			
-			System.out.println("Enter max rows");
-			rowMax+=sc.nextInt();
-			System.out.println("Enter max columns");
-			colMax=sc.nextInt();
-			System.out.println("Enter capacity");
-			capacity=sc.nextInt();
+			//get other details			
+//			System.out.println("Enter max rows");
+//			rowMax+=sc.nextInt();
+//			System.out.println("Enter max columns");
+//			colMax=sc.nextInt();
+//			System.out.println("Enter capacity");
+//			capacity=sc.nextInt();
+//						
 			System.out.println("Enter number of Elite rows");
 			r1=sc.nextInt();
 			System.out.println("Enter number of Premium rows");
 			r2=sc.nextInt();
 			System.out.println("Enter number of Economy rows");
-			r3=sc.nextInt();
-			
+			r3=sc.nextInt();			
 			
 			//set seat values
 			
@@ -102,12 +119,12 @@ public class Seat {
 					type="Economy";
 					price=110;
 				}
+				Statement smt1 = con.createStatement();
 				String dmlcmd = "insert into seat(screen_ID,name,type,price,description) values (\""+screen_ID+"\",\""+name+"\",\""+type+"\",\""+price+"\",\""+description+"\");";
 //				System.out.println(dmlcmd);
-				smt.executeUpdate(dmlcmd);
+				smt1.executeUpdate(dmlcmd);
 			}
 			System.out.println("Added to the database!");
-
 			con.close();
 			}
 		catch (Exception e){
