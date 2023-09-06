@@ -20,23 +20,15 @@ public class Seat {
 	int row=65;
 	int col=1;	
 	int r1,r2,r3;
-	
-	
-	Movie m = new Movie();
-	Theatre t = new Theatre();
-	Screen s = new Screen();
 	int movie_ID;
 	
 	Seat(String name,String type,float price){
 		this.name=name;
 		this.type=type;
 		this.price=price;
-	}
+	}	
 	
-	
-	Seat() {
-		
-	}
+	Seat() {}
 		
 	int addSeats(int screen_ID) {
 		Scanner sc = new Scanner(System.in);		

@@ -14,7 +14,7 @@ public class Client {
 		int choice=0;
 		int input=0 ;
 		int flag=1;
-		Seat s = new Seat();
+//		Seat s = new Seat();
 		Screen s1=new Screen();
 		Theatre t = new Theatre();
 		MovieShow ms = new MovieShow();
@@ -23,7 +23,7 @@ public class Client {
 						
 		System.out.println("\t\t\t\t---------------  Client  ----------------");
 		
-		while(flag==1 )
+		while(flag==1)
 		{
 			System.out.println("\nMENU - \n(Choose an option between 1-6) ");
 			System.out.println("1. Schedule an Event");

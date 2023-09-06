@@ -18,10 +18,10 @@ public class Movie {
 	
 	String languages[] = {"Tamil","Telugu","Malayalam","Kannada","Hindi","English"};
 	enum genres {Action,Comedy,Thriller,Romance,Drama,Horror};
+	Scanner sc = new Scanner(System.in);
 	
 	void addMovies() 
 	{
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Movie Name");
 		name = sc.nextLine();
 		System.out.println("Enter Movie Certification");
@@ -59,7 +59,6 @@ public class Movie {
 		catch (Exception e){
 			System.out.println("Failed to Connect" + e);
 		}
-		sc.close();
 	}
 	
 	void showMovies()
@@ -89,4 +88,5 @@ public class Movie {
 			System.out.println("Failed to Connect" + e);
 		}
 	}
+
 }

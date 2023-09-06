@@ -16,7 +16,7 @@ public class User {
 		int input=0 ;
 		int flag=1;
 		int user_ID=1;
-		MovieShow ms = new MovieShow();
+//		MovieShow ms = new MovieShow();
 		Ticket tk = new Ticket();
 		Event e = new Event();
 		

@@ -93,7 +93,6 @@ public class MovieShow {
 	            System.out.print("   "+rs1.getString("ID")+"      ");
 	            System.out.print(rs1.getString("name")+"      ");
 	            System.out.print(rs1.getString("start")+"    ");	
-//	            System.out.println(rs1.getString("date"));
 	            System.out.print(rs1.getString(5)+"   ");
 	            System.out.print(rs1.getString("locality")+"\n");
 	        }while(rs1.next());
@@ -112,9 +111,7 @@ public class MovieShow {
 	int showSeat(int show_ID) {
 		int rowMax=65;
 		int colMax=0;
-		int capacity;
 		char y;
-//		Seat seats[] = new Seat[200];
 		ArrayList<String> booked = new ArrayList<String> ();
 
 		try {
@@ -123,7 +120,7 @@ public class MovieShow {
 			Statement smt = con.createStatement();
 			
 			// get screen max row and col 
-			String count = "select s.maxRow, s.maxCol,s.capacity from screen s, movieshow ms where ms.screen_ID=s.ID and ms.ID="+show_ID+";";
+			String count = "select s.maxRow, s.maxCol from screen s, movieshow ms where ms.screen_ID=s.ID and ms.ID="+show_ID+";";
 			ResultSet rs = smt.executeQuery(count);
 			if (rs.next()==false) {
 				System.out.println("No seats available");
@@ -136,7 +133,6 @@ public class MovieShow {
 	            y=x.charAt(0);
 				rowMax=(int)y;
 				colMax=rs.getInt("maxCol");	
-				capacity=rs.getInt("capacity");
 	        }while(rs.next());
 			}
 					

@@ -1,6 +1,6 @@
 package client;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Admin {
 	
@@ -12,7 +12,7 @@ public class Admin {
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int choice=0;
+//		int choice=0;
 		int input=0 ;
 		int flag=1; 
 		Movie m = new Movie();
@@ -45,6 +45,7 @@ System.out.println("\t\t\t\t---------------  Admin  ----------------");
 				System.out.println("Invalid option. Please enter value between 1-3.");
 			}
 		}
+		sc.close();
 	}
 
 }

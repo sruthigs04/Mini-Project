@@ -19,8 +19,7 @@ public class Screen {
 	String maxRow;
 	int maxCol;
 	Theatre t = new Theatre();
-	Seat s = new Seat();
-	
+	Seat s = new Seat();	
 	Scanner sc = new Scanner(System.in);
 	
 //	insert into screen(capacity,sound,type,isWorking,currMovie,theatre_ID) values (178,"Dolby Atmos","IMAX","true",NULL,1);
@@ -52,6 +51,8 @@ public class Screen {
 				maxCol = sc.nextInt();
 				sc.nextLine();
 				
+				
+				//add screen to screen table 
 				try {			
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
@@ -74,6 +75,8 @@ public class Screen {
 				}
 				
 				int screen_ID=0;
+				
+				
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
