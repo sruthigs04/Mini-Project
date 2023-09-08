@@ -68,7 +68,7 @@ public class Seat {
 	            String x =rs1.getString("maxRow"); 
 	            char y=x.charAt(0);
 				rowMax=(int)y;
-	            colMax=rs1.getInt("capacity");
+	            colMax=rs1.getInt("maxCol");
 
 	        }while(rs1.next());
 			}
@@ -120,9 +120,8 @@ public class Seat {
 			con.close();
 			}
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect" );
 		}
-		sc.close();
 		return 0;
 	}
 	
@@ -150,7 +149,7 @@ public class Seat {
 		con.close();
 		} 
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect");
 		}
 	return 0;
 	}

@@ -38,30 +38,27 @@ public class Movie {
 		System.out.println("1.Tamil\n 2. Telugu\n 3. Malayalam\n 4. Kannada\n 5. Hindi\n 6.English");
 		language= sc.nextLine();
 		language=language.replaceAll("\\s", "_");
-		System.out.println("language = "+language);
+		System.out.println("Choose genre -");
 		System.out.println("1.Action\n 2. Comedy\n 3. Thriller\n 4. Romance\n 5. Drama\n 6.Horror");
 		genre= sc.nextLine();
 		genre=genre.replaceAll("\\s", "_");
-		System.out.println("genre = "+genre);
 		System.out.println("Enter Artist Name");
 		artist = sc.nextLine();	
-		System.out.println(name+" "+genre+" "+language+" "+is3D+" "+duration+" "+description+" "+releaseDate+" "+artist);
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
 			Statement smt = con.createStatement();
 			String dmlcmd = "insert into movie(name,genre,language,is3D,duration,description,releaseDate,artist) values (\""+name+"\",\""+genre+"\",\""+language+"\",\""+is3D+"\",\""+duration+"\",\""+description+"\",\""+releaseDate+"\",\""+artist+"\");";
-			System.out.println(dmlcmd);
 			smt.executeUpdate(dmlcmd);
 			con.close();
 			}
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect" );
 		}
 	}
 	
-	void showMovies()
+	int showMovies()
 	{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -69,24 +66,32 @@ public class Movie {
 			Statement smt = con.createStatement();
 			String count = "select * from movie";
 			ResultSet rs = smt.executeQuery(count);
-			while(rs.next())
-            {
-                System.out.println("ID:"+rs.getString("ID"));
-                System.out.println("Name:"+rs.getString("name"));
-                System.out.println("Genre:"+rs.getString("genre"));
-                System.out.println("Language:"+languages[Integer.parseInt(rs.getString("language"))-1]);
-                System.out.println("is3D:"+rs.getString("is3D"));
-                System.out.println("duration:"+rs.getString("duration"));
-                System.out.println("description:"+rs.getString("description"));
-                System.out.println("Release Date:"+rs.getString("releaseDate"));
-                System.out.println("Artist:"+rs.getString("artist"));
-                System.out.println("\n");
-            }
+			if (rs.next()==false) {
+				System.out.println("No shows available");
+				return 0;
+			}				
+			else {
+				System.out.println("\n Available Movies - ");
+				System.out.println("\n  S No.  Movie Name    Language    Duration    Release Date");
+			do
+	        {
+	            System.out.print("   "+rs.getString("ID")+"      ");
+	            System.out.print(rs.getString("name")+"        ");
+	            String x = rs.getString("language");
+	            int y = Integer.parseInt(x);
+	            System.out.print(languages[y-1]+"      ");	
+	            System.out.print(rs.getString("duration")+"     ");
+	            System.out.print(rs.getString("releaseDate")+"\n");
+	        }while(rs.next());
+			System.out.println();
+			}			
 			con.close();
 		}
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect");
+			return 0;
 		}
+		return 1;
 	}
 
 }

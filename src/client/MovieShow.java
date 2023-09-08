@@ -27,23 +27,27 @@ public class MovieShow {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
 			
 			//choose movie			
-			System.out.println("Choose Movie\n");
 			m.showMovies();
+			System.out.println("Choose Movie");
 			movie_ID=sc.nextInt();
 			
 			// select theatre
-			System.out.println("Choose Theatre\n");
-			t.showTheatre();
+			int a = t.showTheatre();
+			if (a==0)
+				return 0;
+			System.out.println("Choose Theatre");
 			theatre_ID = sc.nextInt();
 			
 			//select screen	
-			System.out.println("Select Screen");
-			s.showScreen(theatre_ID);
+			a = s.showScreen(theatre_ID);
+			if (a==0)
+				return 0;
+			System.out.println("\nSelect Screen");
 			screen_ID = sc.nextInt();
 			sc.nextLine();
 			
 			//get other details
-			System.out.println("Enter start time");
+			System.out.println("\nEnter start time");
 			startTime=sc.nextLine();
 			System.out.println("Enter end time");
 			endTime=sc.nextLine();
@@ -52,7 +56,6 @@ public class MovieShow {
 
 			// insert into table 			
 			 String sql = "insert into movieShow (screen_ID,movie_ID,start,end,date) values(?,?,?,?,?);";
-			 System.out.println(sql);
 			 PreparedStatement statement = con.prepareStatement(sql);
 			 statement.setInt(1, screen_ID);
 			 statement.setInt(2, movie_ID);
@@ -60,18 +63,19 @@ public class MovieShow {
 			 statement.setString(4, endTime);
 			 statement.setString(5, date);
 			 statement.executeUpdate();
-			 System.out.println("Record created.");
+			 System.out.println("\nShow created.\n");
 			con.close();
 			} 
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect. Unable to schedule show. Please try again." );
+			return 0;
 			}
 		
-	return 0;
+	return 1;
 	
 	}
 	
-	int viewShow() 
+	int viewShow(String city) 
 	{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -79,10 +83,10 @@ public class MovieShow {
 			Statement smt = con.createStatement();
 			System.out.println("Enter date");
 			date=sc.nextLine();
-			String count1 = "select movieshow.ID,movie.name,movieshow.start,movieshow.date,theatre.name,theatre.locality from movie inner join movieshow on movie.ID = movieshow.movie_ID inner join screen on screen.ID = movieshow.screen_ID inner join theatre on theatre.ID = screen.theatre_ID where movieshow.date=\""+date+"\";";
+			String count1 = "select movieshow.ID,movie.name,movieshow.start,movieshow.date,theatre.name,theatre.locality from movie inner join movieshow on movie.ID = movieshow.movie_ID inner join screen on screen.ID = movieshow.screen_ID inner join theatre on theatre.ID = screen.theatre_ID where movieshow.date=\""+date+"\" and city=\""+city+"\";";
 			ResultSet rs1 = smt.executeQuery(count1);
 			if (rs1.next()==false) {
-				System.out.println("No screens available");
+				System.out.println("No shows available");
 				return 0;
 			}				
 			else {
@@ -101,10 +105,11 @@ public class MovieShow {
 			con.close();
 			} 
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect. Unable to display shows. Please try again.");
+			return 0;
 			}
 		
-	return 0;
+	return 1;
 
 }
 	
@@ -195,7 +200,7 @@ public class MovieShow {
 			System.out.println("\n\t\t\t             SCREEN THIS WAY \n\t\t\t\t--------------------------\n");
 			con.close();			
 		}catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect" );
 			e.printStackTrace();
 			}
 		

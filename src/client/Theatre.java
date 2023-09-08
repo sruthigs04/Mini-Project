@@ -41,7 +41,7 @@ public class Theatre {
 			statement.executeUpdate();			
 		}catch (Exception e) {
 			System.out.println("Unable to register theatre");
-			e.printStackTrace();
+//			e.printStackTrace();
 	}
 	}
 	
@@ -54,13 +54,13 @@ public class Theatre {
 			System.out.println("Select theatre to degister");
 			showTheatre();
 			int theatre_ID = sc.nextInt();
-			String cmd = "delete * from theatre where ID=? ";
+			String cmd = "delete from theatre where ID=? ";
 			PreparedStatement statement = con.prepareStatement(cmd);
 			statement.setInt(1, theatre_ID);
 			statement.executeUpdate();			
 		}catch (Exception e) {
 			System.out.println("Unable to deregister theatre, please try again!");
-			e.printStackTrace();
+//			e.printStackTrace();
 	}
 	} 
 			
@@ -77,7 +77,8 @@ public class Theatre {
 			return 0;
 		}				
 		else {
-			System.out.println();
+//			System.out.println();
+			System.out.println("\n Available Theatres - ");
 			do				
             {				
                 System.out.print(" ID:"+rs.getString("ID")+" - ");
@@ -87,9 +88,10 @@ public class Theatre {
 			System.out.println();
 		}
 		}catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect" );
+			return 0;
 			}
-		return 0;
+		return 1;
 	}
 
 }

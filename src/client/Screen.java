@@ -71,11 +71,10 @@ public class Screen {
 				}catch (Exception e)
 				{
 					System.out.println("Unable to add screen");
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 				
-				int screen_ID=0;
-				
+				int screen_ID=0;				
 				
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
@@ -95,7 +94,7 @@ public class Screen {
 					}
 				}
 				catch (Exception e){
-					System.out.println("Failed to Connect" + e);
+					System.out.println("Failed to Connect " );
 					}
 			s.addSeats(screen_ID);
 			return 0;
@@ -112,21 +111,22 @@ public class Screen {
 			if (rs1.next()==false) {
 				System.out.println("No screens available");
 				return 0;
-			}
-				
+			}				
 			else {
+				System.out.println("\n Available Screens - ");
 			do
 	        {
-	            System.out.println("ID:"+rs1.getString("ID"));
-	            System.out.println("Name:"+rs1.getString("name"));
-	            System.out.println("Capacity:"+rs1.getInt("capacity"));	
+				System.out.print(" ID:"+rs1.getString("ID")+" - ");
+                System.out.print(rs1.getString("name")+", ");
+                System.out.println(rs1.getString("capacity")); 
 	        }while(rs1.next());
 			}
 		}
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Failed to Connect");
+			return 0;
 			}
-		return 0;
+		return 1;
 	}
 
 	int removeScreen() {
@@ -138,12 +138,12 @@ public class Screen {
 		try {			
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
-			String cmd = "delete * from screen where ID="+screen_ID+";";
+			String cmd = "delete from screen where ID="+screen_ID+";";
 			PreparedStatement statement = con.prepareStatement(cmd);
 			statement.executeUpdate();			
 		}catch (Exception e) {
 			System.out.println("Unable to remove screen, please try again!");
-			e.printStackTrace();
+//			e.printStackTrace();
 	}		
 		return 0;
 		

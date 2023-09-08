@@ -55,7 +55,7 @@ public class Event {
 	}
 	
 	double calculatePrice(String eventType,int no,String seatType) {
-		double price = 0;
+		double price = 134.99;
 		if (eventType.equals("Music"))
 		{
 			if(seatType.equals("Silver"))
@@ -96,15 +96,25 @@ public class Event {
 			System.out.println(" VIP      - 20000.00 ");
 			System.out.println("Enter seat Category.");
 		}
-		else if (eventType.equals("Comedy"))
+		else if (eventType.equals("Comedy") || eventType.equals("Theatre") )
 		{
 			System.out.println(" Silver   - 399.00 ");
 			System.out.println(" Gold     - 599.00 ");
 			System.out.println(" Diamond  - 999.00 ");
-//			System.out.println(" Platinum - 1299.00 ");
+			System.out.println(" Platinum - 1299.00 ");
 			System.out.println(" VIP      - 1499.00 ");
 			System.out.println("Enter seat Category.");
 		}
+	}
+	
+	int payment(double price2) {
+		System.out.println("--- Payment ---");
+		System.out.println("Amount to be paid - "+price2);
+		System.out.println("Please enter Y to complete transaction and N to cancel.");
+		String y = sc.next();
+		if(y.equals("Y") || y.equals("y"))
+			return 1;
+		return 0;
 	}
 	
 	void getEventDetails() {
@@ -189,21 +199,22 @@ public class Event {
 			
 		}catch (Exception e) {
 			System.out.println("Unable to schedule Event");
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
+		System.out.println("Event scheduled successfully!");
 	}
 	
-	int showEventDetails(int event_ID) {
+	int showEventDetails(int event_ID,String city, String eventType) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
 			Statement smt = con.createStatement();
 			
 			
-			String count1 = "select * from event where ID="+event_ID+";";
+			String count1 = "select * from event where ID="+event_ID+" and city=\""+city+"\" and type=\""+eventType+"\";";
 			ResultSet rs1 = smt.executeQuery(count1);
 			if (rs1.next()==false) {
-				System.out.println("No event details available");
+				System.out.println("No event details available.");
 				return 0;
 			}				
 			else {
@@ -228,18 +239,19 @@ public class Event {
 			con.close();
 			} 
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
+			System.out.println("Connection error. Please try again.");
+			return 0;
 			}
-		return 0;
+		return 1;
 	}
 	
-	int showAllEvents(String type) {
+	int showAllEvents(String type, String city) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
 			Statement smt = con.createStatement();			
 			
-			String count1 = "select * from event where type=\""+type+"\";";
+			String count1 = "select * from event where type=\""+type+"\" and city=\""+city+"\";";
 			ResultSet rs1 = smt.executeQuery(count1);
 			if (rs1.next()==false) {
 				System.out.println("No event details available");
@@ -263,30 +275,36 @@ public class Event {
 			con.close();
 			} 
 		catch (Exception e){
-			System.out.println("Failed to Connect" + e);
-			e.printStackTrace();
+			System.out.println("Failed to Connect");
+//			e.printStackTrace();
+			return 0;
 			}
-		return 0;
+		return 1;
 	}
 	
-	int bookEventTickets(String eventType, int user_ID) {
+	int bookEventTickets(String eventType, int user_ID, String city) {
+		int check=1;
 		try {
 			
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
 			
 			//display event details 
-			showAllEvents(eventType);
+			check = showAllEvents(eventType,city);
+			if (check==0)
+				return 0;
 			int event_ID;
 			System.out.println("Enter event ID to learn more about the event -");
 			event_ID = sc.nextInt();
-			showEventDetails(event_ID);
+			check = showEventDetails(event_ID,city,eventType);
+			if (check==0)
+				return 0;
 			
 			//exit
 			System.out.println("Would you like to book tickets for this event? If yes, please enter Y, else enter N to exit to Home Page");
 			String option = sc.next();
 			sc.nextLine();
-			if (option=="n" || option=="N")
+			if (option.equals("n") || option.equals("N"))
 				return 0;
 			
 			//get other details
@@ -318,7 +336,17 @@ public class Event {
 			if(available_seats<seat_count) {
 				System.out.println("Only "+available_seats+" seats are available. Please try booking with a lower number of seats.");
 				return 0;
-			}			
+			}				
+			
+			//payment 
+			int paid = payment(price);
+			if (paid!=1) {
+				System.out.println("Payment declined. Please try again.");
+				return 0;
+			}
+			else {
+				System.out.println("Payment processed successfully.");
+			}
 						
 			//update table
 			String cmd = "insert into eventticket(event_ID,user_ID,category,seat_count,price) values (?,?,?,?,?)";
@@ -340,44 +368,95 @@ public class Event {
 			con.close();			
 			System.out.println("Tickets booked!");
 			}catch (Exception e) {
-				System.out.println("Unable to schedule Event");
-				e.printStackTrace();
+				System.out.println("Unable to book event tickets. Please try again.");
+//				e.printStackTrace();
 			}
 		return 0;
 	}
 	
-//	int cancelEventTicket(int user_ID) {
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
-//			Statement smt = con.createStatement();			
-//			
-//			String count1 = "select et.ID,e.title,e.date,e.city,et.category,et.seat_count from event e,eventticket et where et.user_ID="+user_ID+" and et.event_ID=e.ID;";
-//			ResultSet rs1 = smt.executeQuery(count1);
-//			if (rs1.next()==false) {
-//				System.out.println("No event details available");
-//				return 0;
-//			}				
-//			else {
-//				System.out.println("\nUpcoming "+type+" Shows -");
-//				System.out.println("\n  ID        Title        Date       City     Category      Seat Count ");
-//			do
-//	        {
-//	            System.out.print("  "+rs1.getString("ID")+"   ");
-//	            System.out.print(rs1.getString("title")+"   ");
-//	            System.out.print(rs1.getString("date")+"   ");	
-//	            System.out.print(rs1.getString("city")+"   ");
-//	            System.out.print(rs1.getString("category")+"    ");
-//	            System.out.print(rs1.getString("seat_count")+"\n");
-//	        }while(rs1.next());
-//			System.out.println();
-//			}	
-//						
-//		}catch (Exception e) {
-//			System.out.println("Connection failed. Unable to Cancel tickets, please try again.");
+	int cancelEventTicket(int user_ID) {
+		int ticket_ID=0;
+		int seat_count=0;
+		String category;
+		int event_ID=0;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");
+			
+			// display all tickets booked by user 
+			eventTicketUser(user_ID);
+		
+			// select ticket to be cancelled
+			System.out.println("Select the show ticket to be cancelled.");
+			ticket_ID=sc.nextInt();
+			
+			//get ticket details
+			Statement smt1 = con.createStatement();				
+			String count2 = "select category,seat_count,event_ID from eventticket where ID="+ticket_ID+";";
+			ResultSet rs2 = smt1.executeQuery(count2);
+			if (rs2.next()==false) {
+				System.out.println("No event details available");
+				return 0;
+			}				
+			else {
+			do
+	        {
+	            category=rs2.getString("category");
+	            if (!category.equals("VIP"))
+	            	category=category.toLowerCase();
+	            seat_count=rs2.getInt("seat_count");
+	            event_ID=rs2.getInt("event_ID");
+	        }while(rs2.next());
+			System.out.println();
+			}					
+			
+			//delete ticket from eventticket table and update event table 		
+			String cmd = "delete from eventticket where ID="+ticket_ID+";";
+			String cmd1="update event set "+category+"="+category+"+"+seat_count+" where ID="+event_ID+";";
+			PreparedStatement statement = con.prepareStatement(cmd);
+			PreparedStatement statement1 = con.prepareStatement(cmd1);
+			statement.executeUpdate();	
+			statement1.executeUpdate();				
+			
+		}catch (Exception e) {
+			System.out.println("Unable to cancel event ticket, please try again!");
 //			e.printStackTrace();
-//		}
-//		return 0;
-//	}
+	}
+		System.out.println("Tickets have been cancelled successfully. Refund will be processed in 3-5 business tickets.");
+		return 1;
+	}
 
+	
+	int eventTicketUser(int user_ID)
+	{
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookmyshow","root","root");		
+			Statement smt = con.createStatement();				
+			String count1 = "select et.ID,e.title,e.date,e.city,et.category,et.seat_count from event e,eventticket et where et.user_ID="+user_ID+" and et.event_ID=e.ID;";
+			ResultSet rs1 = smt.executeQuery(count1);
+			if (rs1.next()==false) {
+				System.out.println("No event details available");
+				return 0;
+			}				
+			else {
+				System.out.println("\nUpcoming Event Shows -");
+			do
+	        {
+	            System.out.print(" "+rs1.getString("ID")+" - ");
+	            System.out.print(rs1.getString("title")+"");
+	            System.out.print(" in "+rs1.getString("city")+" on ");
+	            System.out.print(rs1.getString("date")+". ");	
+	            System.out.print(rs1.getString("category")+" Ticket - ");
+	            System.out.print(rs1.getString("seat_count")+"\n");
+	        }while(rs1.next());
+			System.out.println();
+			}
+			}catch (Exception e) {
+				System.out.println("Connection failed, please try again!");
+//				e.printStackTrace();
+		}			
+		return 0;			
+	}
 }
