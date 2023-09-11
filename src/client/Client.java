@@ -25,7 +25,7 @@ public class Client {
 		
 		while(flag==1)
 		{
-			System.out.println("\nMENU - \n(Choose an option between 1-8) ");
+			System.out.println("\nMENU - \n(Choose an option between 1-9) ");
 			System.out.println("1. Schedule an Event");
 			System.out.println("2. View Events");
 			System.out.println("3. Schedule a Movie");
@@ -33,7 +33,8 @@ public class Client {
 			System.out.println("5. Modify Theatre Screen Details");
 			System.out.println("6. Register Theatre");
 			System.out.println("7. Deregister Theatre");
-			System.out.println("8. Exit");
+			System.out.println("8. View Theatres");
+			System.out.println("9. Exit");
 			
 			input=sc.nextInt();
 			sc.nextLine();
@@ -133,11 +134,17 @@ public class Client {
 				exitfn(flag);
 				break;
 			case 8:
+				t.showTheatre();
+				System.out.println("Press 1 to go to Home Page. To exit, press 0 ");
+				flag=sc.nextInt();
+				exitfn(flag);
+				break;
+			case 9:
 				flag=0;
 				exitfn(flag);
 				break;
 			default:
-				System.out.println("Invalid option. Please enter value between 1-8.");
+				System.out.println("Invalid option. Please enter value between 1-9.");
 			}
 		}
 		sc.close();

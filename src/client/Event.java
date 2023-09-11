@@ -195,13 +195,14 @@ public class Event {
 			statement.setInt(19, capacity);
 			statement.setInt(20, no_of_categories);
 			statement.setString(21, capacity_each);
-			statement.executeUpdate();			
+			statement.executeUpdate();
+			System.out.println("Event scheduled successfully!");
+
 			
 		}catch (Exception e) {
 			System.out.println("Unable to schedule Event");
 //			e.printStackTrace();
 		}
-		System.out.println("Event scheduled successfully!");
 	}
 	
 	int showEventDetails(int event_ID,String city, String eventType) {
@@ -417,13 +418,13 @@ public class Event {
 			PreparedStatement statement = con.prepareStatement(cmd);
 			PreparedStatement statement1 = con.prepareStatement(cmd1);
 			statement.executeUpdate();	
-			statement1.executeUpdate();				
+			statement1.executeUpdate();	
+			System.out.println("Tickets have been cancelled successfully. Refund will be processed in 3-5 business tickets.");
 			
 		}catch (Exception e) {
 			System.out.println("Unable to cancel event ticket, please try again!");
 //			e.printStackTrace();
 	}
-		System.out.println("Tickets have been cancelled successfully. Refund will be processed in 3-5 business tickets.");
 		return 1;
 	}
 

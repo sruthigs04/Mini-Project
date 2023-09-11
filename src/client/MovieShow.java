@@ -128,7 +128,7 @@ public class MovieShow {
 			String count = "select s.maxRow, s.maxCol from screen s, movieshow ms where ms.screen_ID=s.ID and ms.ID="+show_ID+";";
 			ResultSet rs = smt.executeQuery(count);
 			if (rs.next()==false) {
-				System.out.println("No seats available");
+				System.out.println("No seats available !");
 				return 0;
 			}				
 			else {
@@ -146,8 +146,8 @@ public class MovieShow {
 			String count1="select bt.seat_name from bookedtickets bt, movieticket mt where mt.ID=bt.ticket_ID and mt.show_ID="+show_ID+";";
 			ResultSet rs1 = smt.executeQuery(count1);
 			if (rs1.next()==false) {
-				System.out.println("No seats available");
-				return 0;
+				System.out.println("");
+//				return 0;
 			}				
 			else {
 			do
@@ -201,7 +201,7 @@ public class MovieShow {
 			con.close();			
 		}catch (Exception e){
 			System.out.println("Failed to Connect" );
-			e.printStackTrace();
+//			e.printStackTrace();
 			}
 		
 		return 0;
